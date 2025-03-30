@@ -1,4 +1,7 @@
+import 'package:app/view_app/screens/calendar/calendar_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'core/style/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,21 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Target Tracking App',
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Text('Hello world!'),
+      home: const CalendarScreen(),
+      theme: ThemeData(
+        // fontFamily: GoogleFonts.getFont(kDefaultFontFamily).fontFamily,
+        scaffoldBackgroundColor: colorWhite,
+        useMaterial3: true,
       ),
     );
   }
 }
-
