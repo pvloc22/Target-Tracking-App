@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 const Color colorPrinciple = Color(0xFF3C3793);
@@ -14,3 +13,10 @@ const Color colorRed = Color(0xFFFF0000);
 const Color colorBlueMint = Color(0xFF03BBD7);
 const Color colorLightGreen = Color(0xFF9BE46C);
 const Color colorGreen = Color(0xFF02B936);
+
+// Calendar specific colors
+const Color colorCalendarActive = Color(0xFF37306B);
+const Color colorTaskBlue = Color(0xFF3B6CBD);
+const Color colorTaskGreen = Color(0xFF56A23F);
+const Color colorTaskRed = Color(0xFFD10000);
+const Color colorShadow = Color(0x80000000); // black with 50% opacity

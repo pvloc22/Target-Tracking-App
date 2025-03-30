@@ -62,10 +62,10 @@ class _CalendarFormState extends State<CalendarForm> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // màu của bóng
-            spreadRadius: 5, // phân tán bóng
-            blurRadius: 7, // độ mờ của bóng
-            offset: Offset(0, 3), // vị trí của bóng
+            color: colorGrey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -74,7 +74,7 @@ class _CalendarFormState extends State<CalendarForm> {
         onDateChange: (selectedDate) {
           print('$selectedDate');
         },
-        activeColor: const Color(0xff37306B),
+        activeColor: colorCalendarActive,
         headerProps: const EasyHeaderProps(
           monthPickerType: MonthPickerType.switcher,
           dateFormatter: DateFormatter.fullDateDayAsStrMY(),
@@ -84,8 +84,8 @@ class _CalendarFormState extends State<CalendarForm> {
           inactiveDayStyle: DayStyle(borderRadius: 32.0),
         ),
         timeLineProps: const EasyTimeLineProps(
-          hPadding: 16.0, // padding from left and right
-          separatorPadding: 16.0, // padding between days
+          hPadding: 16.0,
+          separatorPadding: 16.0,
         ),
       ),
     );
@@ -100,10 +100,10 @@ class _CalendarFormState extends State<CalendarForm> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // màu của bóng
-            spreadRadius: 5, // phân tán bóng
-            blurRadius: 7, // độ mờ của bóng
-            offset: Offset(0, 3), // vị trí của bóng
+            color: colorGrey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
           ),
         ],
       ),

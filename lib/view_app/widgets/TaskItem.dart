@@ -1,9 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-
+import 'package:app/core/style/colors.dart';
 
 class TaskItem extends StatelessWidget {
   final String title;
@@ -29,7 +28,6 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -37,16 +35,16 @@ class TaskItem extends StatelessWidget {
           SlidableAction(
             flex: 1,
             onPressed: (_) => onComplete(),
-            backgroundColor: Color(0xFF56A23F).withOpacity(0.8),
-            foregroundColor: Colors.white,
+            backgroundColor: colorTaskGreen.withOpacity(0.8),
+            foregroundColor: colorWhite,
             icon: Icons.check_circle_outline,
             borderRadius: BorderRadius.horizontal(left: Radius.circular(9)),
           ),
           SlidableAction(
             flex: 1,
             onPressed: (_) => onDelete(),
-            backgroundColor: Color(0xFFD10000).withOpacity(0.8),
-            foregroundColor: Colors.white,
+            backgroundColor: colorTaskRed.withOpacity(0.8),
+            foregroundColor: colorWhite,
             icon: Icons.delete_outline,
             borderRadius: BorderRadius.horizontal(right: Radius.circular(9)),
           ),
@@ -55,11 +53,11 @@ class TaskItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorWhite,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.25),
+              color: colorShadow,
               offset: Offset(0, 4),
               blurRadius: 4,
             ),
@@ -76,7 +74,8 @@ class TaskItem extends StatelessWidget {
       ),
     );
   }
-  Widget _circleTimeAndTitle(){
+
+  Widget _circleTimeAndTitle() {
     return Row(
       children: [
         Container(
@@ -84,7 +83,7 @@ class TaskItem extends StatelessWidget {
           height: 50,
           padding: EdgeInsets.all(3),
           decoration: BoxDecoration(
-            color: Color(0xFF3B6CBD).withOpacity(0.1),
+            color: colorTaskBlue.withOpacity(0.1),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Center(
@@ -92,7 +91,7 @@ class TaskItem extends StatelessWidget {
               '$duration ',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xFF3B6CBD),
+                color: colorTaskBlue,
                 fontSize: 8,
                 fontFamily: 'Inter',
               ),
@@ -110,6 +109,7 @@ class TaskItem extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Inter',
+                  color: colorBlack,
                 ),
               ),
               SizedBox(height: 4),
@@ -117,7 +117,7 @@ class TaskItem extends StatelessWidget {
                 description,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Color(0xFF8B8E8D),
+                  color: colorGrey,
                   fontFamily: 'Inter',
                 ),
               ),
@@ -127,18 +127,20 @@ class TaskItem extends StatelessWidget {
       ],
     );
   }
-  Widget _shortTaskInformation(){
-    return             Row(
+
+  Widget _shortTaskInformation() {
+    return Row(
       children: [
         Row(
           children: [
-            Icon(Icons.calendar_today, size: 16),
+            Icon(Icons.calendar_today, size: 16, color: colorBlack),
             SizedBox(width: 4),
             Text(
               DateFormat('dd/MM/yyyy').format(date),
               style: TextStyle(
                 fontSize: 10,
                 fontFamily: 'Inter',
+                color: colorBlack,
               ),
             ),
           ],
@@ -147,13 +149,13 @@ class TaskItem extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           decoration: BoxDecoration(
-            color: Color(0xFF3B6CBD),
+            color: colorTaskBlue,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             tag,
             style: TextStyle(
-              color: Colors.white,
+              color: colorWhite,
               fontSize: 10,
               fontWeight: FontWeight.w600,
               fontFamily: 'Inter',
@@ -164,17 +166,17 @@ class TaskItem extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.red),
+            border: Border.all(color: colorRed),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
             children: [
-              Icon(Icons.access_time, size: 16, color: Colors.red),
+              Icon(Icons.access_time, size: 16, color: colorRed),
               SizedBox(width: 5),
               Text(
                 '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')} ${time.period == DayPeriod.am ? 'AM' : 'PM'}',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: colorRed,
                   fontSize: 10,
                   fontFamily: 'Inter',
                 ),
