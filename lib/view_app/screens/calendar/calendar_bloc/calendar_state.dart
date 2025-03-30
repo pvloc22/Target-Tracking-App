@@ -17,3 +17,8 @@ class CalendarTypeWeek extends CalendarState{
   @override
   List<Object?> get props => [];
 }
+
+class CalendarTypeMonth extends CalendarState{
+  @override
+  List<Object?> get props => [];
+}

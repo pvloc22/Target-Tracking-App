@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 
 @immutable
 abstract class CalendarEvent{
+  const CalendarEvent();
 }
 
-class CalendarWeekChange extends CalendarEvent{
-  CalendarWeekChange();
-}
+class CalendarChangeType extends CalendarEvent{
+   final String typeCalendar;
 
-class CalendarMonthChange extends CalendarEvent{
-  CalendarMonthChange();
+  const CalendarChangeType({required this.typeCalendar});
+
 }

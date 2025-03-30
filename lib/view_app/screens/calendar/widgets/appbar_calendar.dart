@@ -1,4 +1,8 @@
+import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_bloc.dart';
+import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_event.dart';
+import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/style/colors.dart';
 import '../../../../data/constants/constants.dart';
@@ -18,11 +22,13 @@ class _AppbarCalendarState extends State<AppbarCalendar> {
   String? _selectedValue;
 
   void dropDownCallBack(String? selectedValue) {
-    if (selectedValue is String) {
-      setState(() {
-        _selectedValue = selectedValue;
-        // widget.onPressed(_selectedValue!);
-      });
+    if (selectedValue is String &&  selectedValue == WEEK_CALENDAR) {
+      _selectedValue = WEEK_CALENDAR;
+      context.read<CalendarBloc>().add(CalendarChangeType(typeCalendar: WEEK_CALENDAR));
+    }
+    else {
+      _selectedValue = MONTH_CALENDAR;
+      context.read<CalendarBloc>().add(CalendarChangeType(typeCalendar: MONTH_CALENDAR));
     }
   }
   @override
@@ -32,26 +38,32 @@ class _AppbarCalendarState extends State<AppbarCalendar> {
       title: Text('Calendar', style: TextStyle(fontWeight: FontWeight.bold, color: colorWhite)),
       backgroundColor: colorPrinciple,
       actions: [
-        DropdownButton(
-          value: _selectedValue ?? WEEK_CALENDAR,
-          dropdownColor: colorPrinciple,
-          underline: Container(),
-          iconSize: 40,
-          iconEnabledColor: colorWhite,
-          style: TextStyle(color: colorWhite, fontWeight: FontWeight.bold),
-          items: const [
-            DropdownMenuItem<String>(
-              value: WEEK_CALENDAR,
-              child: Text('Week', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            DropdownMenuItem<String>(
-              value: MONTH_CALENDAR,
-              child: Text('Month', style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ],
-          onChanged: dropDownCallBack,
+        BlocBuilder<CalendarBloc, CalendarState>(builder:(context, state){
+          return _dropdownButton();
+        })
+      ],
+    );
+  }
+
+  Widget _dropdownButton(){
+    return DropdownButton(
+      value: _selectedValue ?? WEEK_CALENDAR,
+      dropdownColor: colorPrinciple,
+      underline: Container(),
+      iconSize: 40,
+      iconEnabledColor: colorWhite,
+      style: TextStyle(color: colorWhite, fontWeight: FontWeight.bold),
+      items: const [
+        DropdownMenuItem<String>(
+          value: WEEK_CALENDAR,
+          child: Text('Week', style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        DropdownMenuItem<String>(
+          value: MONTH_CALENDAR,
+          child: Text('Month', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
+      onChanged: dropDownCallBack,
     );
   }
 }
