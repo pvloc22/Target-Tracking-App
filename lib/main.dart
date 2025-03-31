@@ -1,3 +1,6 @@
+import 'package:app/view_app/screens/auth/login_screen.dart';
+import 'package:app/view_app/screens/auth/sign_up_screen.dart';
+import 'package:app/view_app/screens/auth/verify_code_screen.dart';
 import 'package:app/view_app/screens/calendar/calendar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Target Tracking App',
-      home: const CalendarScreen(),
+      home: const LoginScreen(),
       theme: ThemeData(
         // fontFamily: GoogleFonts.getFont(kDefaultFontFamily).fontFamily,
         scaffoldBackgroundColor: colorWhite,

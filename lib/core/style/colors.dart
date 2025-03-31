@@ -20,3 +20,10 @@ const Color colorTaskBlue = Color(0xFF3B6CBD);
 const Color colorTaskGreen = Color(0xFF56A23F);
 const Color colorTaskRed = Color(0xFFD10000);
 const Color colorShadow = Color(0x80000000); // black with 50% opacity
+
+// Login screen colors
+const Color colorTextGrey = Color(0xFF797979);
+const Color colorBorderGrey = Color(0xFFE6E6E6);
+const Color colorDividerGrey = Color(0xFFE4E4E4);
+const Color colorBrown = Color(0xFF704F38);
+const Color colorFacebookBlue = Color(0xFF1977F3);
