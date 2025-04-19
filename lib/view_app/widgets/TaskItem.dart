@@ -32,6 +32,9 @@ class TaskItem extends StatelessWidget {
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
+          SizedBox(
+            width: 3,
+          ),
           SlidableAction(
             flex: 1,
             onPressed: (_) => onComplete(),
@@ -40,36 +43,45 @@ class TaskItem extends StatelessWidget {
             icon: Icons.check_circle_outline,
             borderRadius: BorderRadius.horizontal(left: Radius.circular(9)),
           ),
+          SizedBox(
+            width: 3,
+          ),
           SlidableAction(
             flex: 1,
             onPressed: (_) => onDelete(),
             backgroundColor: colorTaskRed.withOpacity(0.8),
             foregroundColor: colorWhite,
-            icon: Icons.delete_outline,
+            icon: Icons.delete_forever,
             borderRadius: BorderRadius.horizontal(right: Radius.circular(9)),
           ),
         ],
       ),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-        decoration: BoxDecoration(
-          color: colorWhite,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: colorShadow,
-              offset: Offset(0, 4),
-              blurRadius: 4,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _circleTimeAndTitle(),
-            SizedBox(height: 8),
-            _shortTaskInformation()
-          ],
+      child: InkWell(
+        onTap: (){
+          print('faf');
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          margin: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            color: colorWhite,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: colorShadow,
+                offset: Offset(0, 4),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _circleTimeAndTitle(),
+              SizedBox(height: 8),
+              _shortTaskInformation()
+            ],
+          ),
         ),
       ),
     );
@@ -79,26 +91,41 @@ class TaskItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 50,
-          height: 50,
-          padding: EdgeInsets.all(3),
+          margin: EdgeInsets.only(right: 12),
           decoration: BoxDecoration(
             color: colorTaskBlue.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(30),
+            shape: BoxShape.circle,
           ),
-          child: Center(
-            child: Text(
-              '$duration ',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: colorTaskBlue,
-                fontSize: 8,
-                fontFamily: 'Inter',
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  value: 0.75, // You might want to make this a parameter
+                  backgroundColor: colorTaskBlue.withOpacity(0.1),
+                  valueColor: AlwaysStoppedAnimation<Color>(colorTaskBlue),
+                  strokeWidth: 4,
+                ),
               ),
-            ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Center(
+                  child: Text(
+                    duration,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colorTaskBlue,
+                      fontSize: 8,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(width: 3),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +139,7 @@ class TaskItem extends StatelessWidget {
                   color: colorBlack,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 description,
                 style: TextStyle(

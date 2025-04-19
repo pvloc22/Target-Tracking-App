@@ -11,6 +11,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../core/style/colors.dart';
 import '../../../widgets/TaskItem.dart';
+import '../../../widgets/bottom_navigator_bar.dart';
 
 class CalendarForm extends StatefulWidget {
   const CalendarForm({super.key});
@@ -34,7 +35,6 @@ class _CalendarFormState extends State<CalendarForm> {
       appBar: AppbarCalendar(),
       body: Container(
         width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           children: [
             BlocBuilder<CalendarBloc, CalendarState>(
@@ -50,6 +50,7 @@ class _CalendarFormState extends State<CalendarForm> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 1,),
     );
   }
 
@@ -411,24 +412,21 @@ class _CalendarFormState extends State<CalendarForm> {
         itemCount: 5,
         padding: EdgeInsets.zero,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: TaskItem(
-              title: 'Save \$50,000',
-              description: 'By saving at least 100 minimum; a month before retirement',
-              duration: '40 Minutes',
-              date: DateTime(2025, 3, 11),
-              time: TimeOfDay(hour: 10, minute: 0),
-              tag: 'Help the needy',
-              onComplete: () {
-                // Handle complete action
-                print('Task completed');
-              },
-              onDelete: () {
-                // Handle delete action
-                print('Task deleted');
-              },
-            ),
+          return TaskItem(
+            title: 'Save \$50,000',
+            description: 'By saving at least 100 minimum; a month before retirement',
+            duration: '40 Minutes',
+            date: DateTime(2025, 3, 11),
+            time: TimeOfDay(hour: 10, minute: 0),
+            tag: 'Help the needy',
+            onComplete: () {
+              // Handle complete action
+              print('Task completed');
+            },
+            onDelete: () {
+              // Handle delete action
+              print('Task deleted');
+            },
           );
         },
       ),

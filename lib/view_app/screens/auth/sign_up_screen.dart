@@ -136,39 +136,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Terms & Conditions Checkbox
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Checkbox(
-                      value: _agreedToTerms,
-                      onChanged: (value) {
-                        setState(() {
-                          _agreedToTerms = value ?? false;
-                        });
-                      },
-                      activeColor: colorPrinciple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    'Agree with Terms & Condition',
-                    style: TextStyle(
-                      color: colorBlack,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
               // Sign Up Button
               SizedBox(
                 width: double.infinity,
