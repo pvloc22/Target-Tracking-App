@@ -5,7 +5,8 @@ import '../../../core/style/colors.dart';
 import '../../widgets/appbar_new_item.dart';
 
 class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+  final String? goalId;
+  const CreateTaskScreen({super.key, this.goalId});
 
   @override
   State<CreateTaskScreen> createState() => _CreateTaskScreenState();
@@ -36,63 +37,67 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarNewItem(title: 'Create A Task'),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle('TASK TITLE *'),
-            _buildTextField(_titleController, 'Enter task title'),
-            const SizedBox(height: 14),
-            
-            _buildSectionTitle('TASK DESCRIPTION'),
-            _buildTextField(_descriptionController, 'Enter task description', maxLines: 3),
-            const SizedBox(height: 14),
+      body: Container(
+        color: colorWhite,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionTitle('TASK TITLE *'),
+              _buildTextField(_titleController, 'Enter task title'),
 
-            _buildSectionTitle('LINK TO GOAL'),
-            _buildGoalSelector(),
-            const SizedBox(height: 14),
-
-            _buildSectionTitle('COLOR'),
-            _buildColorSelector(),
-            const SizedBox(height: 14),
-
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildSectionTitle('DATE *'),
-                      _buildDateSelector(),
-                    ],
-                  ),
+              _buildSectionTitle('TASK DESCRIPTION'),
+              _buildTextField(_descriptionController, 'Enter task description', maxLines: 3),
+              if (widget.goalId == null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildSectionTitle('LINK TO GOAL'),
+                    _buildGoalSelector(),
+                  ],
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildSectionTitle('TIME *'),
-                      _buildTimeSelector(),
-                    ],
-                  ),
+
+              _buildSectionTitle('COLOR'),
+              _buildColorSelector(),
+
+              Container(
+                margin: EdgeInsets.only(bottom: 14),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionTitle('DATE *'),
+                          _buildDateSelector(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionTitle('TIME *'),
+                          _buildTimeSelector(),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 14),
+              ),
 
-            _buildSectionTitle('REMINDER'),
-            _buildReminderSelector(),
-            const SizedBox(height: 14),
+              _buildSectionTitle('REMINDER'),
+              _buildReminderSelector(),
 
-            _buildSectionTitle('REPEAT'),
-            _buildRepeatSelector(),
-            const SizedBox(height: 14),
+              // _buildSectionTitle('REPEAT'),
+              // _buildRepeatSelector(),
 
-            _buildSectionTitle('PRACTICE HOURS'),
-            _buildPracticeHoursSelector(),
-          ],
+              _buildSectionTitle('PRACTICE HOURS'),
+              _buildPracticeHoursSelector(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: _buildBottomButton(),
@@ -100,16 +105,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        title,
-        style: TextStyle(
-          color: colorShadow,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          fontFamily: 'Inter',
-        ),
+    return Text(
+      title,
+      style: TextStyle(
+        color: colorShadow,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        fontFamily: 'Inter',
       ),
     );
   }
@@ -117,6 +119,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget _buildTextField(TextEditingController controller, String hint, {int maxLines = 1}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
+      margin: EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         border: Border.all(color: colorBorderGrey),
         borderRadius: BorderRadius.circular(10),
@@ -150,6 +153,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
     return Container(
       height: 40,
+      margin: EdgeInsets.only(bottom: 14),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: colors.length,
@@ -164,9 +168,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 decoration: BoxDecoration(
                   color: colors[index],
                   shape: BoxShape.circle,
-                  border: _selectedColor == colors[index]
-                      ? Border.all(color: Colors.black, width: 2)
-                      : null,
+                ),
+                child: Center(
+                  child: _selectedColor == colors[index] ? Icon(Icons.check, color: colorWhite) : null,
                 ),
               ),
             ),
@@ -235,6 +239,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       onTap: _showReminderOptions,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        margin: EdgeInsets.only(bottom: 14),
         decoration: BoxDecoration(
           border: Border.all(color: colorBorderGrey),
           borderRadius: BorderRadius.circular(10),
@@ -318,46 +323,51 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   }
 
   Widget _buildRepeatSelector() {
-    return Column(
-      children: [
-        _buildRepeatOption('None', true),
-        _buildRepeatOption('Daily', false),
-        _buildRepeatOption('Weekly', false),
-        _buildRepeatOption('Monthly', false),
-      ],
+    return Container(
+      margin: EdgeInsets.only(bottom: 14),
+      child: Row(
+        children: [
+          _buildRepeatOption('None', true),
+          _buildRepeatOption('Daily', false),
+          _buildRepeatOption('Weekly', false),
+          _buildRepeatOption('Monthly', false),
+        ],
+      ),
     );
   }
 
   Widget _buildRepeatOption(String text, bool isSelected) {
-    return GestureDetector(
-      onTap: () => setState(() => _selectedRepeat = text),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        child: Row(
-          children: [
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _selectedRepeat == text ? colorPrinciple : Colors.transparent,
-                border: Border.all(
-                  color: _selectedRepeat == text
-                      ? colorPrinciple
-                      : colorPrinciple.withOpacity(0.6),
-                  width: 2,
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => _selectedRepeat = text),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _selectedRepeat == text ? colorPrinciple : Colors.transparent,
+                  border: Border.all(
+                    color: _selectedRepeat == text
+                        ? colorPrinciple
+                        : colorPrinciple.withOpacity(0.6),
+                    width: 2,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 12,
-                fontFamily: 'Inter',
+              const SizedBox(width: 8),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Inter',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -366,6 +376,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Widget _buildPracticeHoursSelector() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      margin: EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         border: Border.all(color: colorBorderGrey),
         borderRadius: BorderRadius.circular(10),
@@ -501,6 +512,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       onTap: _showGoalOptions,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        margin: EdgeInsets.only(bottom: 14),
         decoration: BoxDecoration(
           border: Border.all(color: colorBorderGrey),
           borderRadius: BorderRadius.circular(10),

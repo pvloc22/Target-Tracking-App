@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+// Background color
+const Color backgroundColor = Color(0xFFEEF0F2);
+
+// Principle color
 const Color colorPrinciple = Color(0xFF3C3793);
+const Color colorLightPrinciple = Color(0xFF8683BA);
 const Color colorStartButton = Color(0xFF1CA4B4);
 const Color colorWhite = Colors.white;
 const Color colorBlack = Colors.black;
@@ -27,3 +32,14 @@ const Color colorBorderGrey = Color(0xFFE6E6E6);
 const Color colorDividerGrey = Color(0xFFE4E4E4);
 const Color colorBrown = Color(0xFF704F38);
 const Color colorFacebookBlue = Color(0xFF1977F3);
+
+// Goal selection colors
+const Color colorTransparent = Color(0x00D9D9D9);
+const Color colorYellow = Color(0xFFFFEB3C);
+const Color colorOrange = Color(0xFFFF9702);
+const Color colorPurple = Color(0xFF9D27B1);
+const Color colorCyan = Color(0xFF00BCD5);
+const Color colorLightBlue = Color(0xFF2196F3);
+const Color colorPink = Color(0xFFE91E63);
+const Color colorBrightRed = Color(0xFFF44336);
+const Color colorLightGrey = Color(0xFFE5E5E5);

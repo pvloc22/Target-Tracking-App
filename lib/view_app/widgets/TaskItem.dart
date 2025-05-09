@@ -1,3 +1,5 @@
+import 'package:app/view_app/screens/detail_task/task_summary_screen.dart';
+import 'package:app/view_app/screens/detail_task/watch_task_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -10,7 +12,8 @@ class TaskItem extends StatelessWidget {
   final String duration;
   final DateTime date;
   final TimeOfDay time;
-  final String tag;
+  final String? tagGoal;
+  final bool isCompleted;
   final VoidCallback onComplete;
   final VoidCallback onDelete;
 
@@ -21,9 +24,10 @@ class TaskItem extends StatelessWidget {
     required this.duration,
     required this.date,
     required this.time,
-    required this.tag,
+    this.tagGoal,
     required this.onComplete,
     required this.onDelete,
+    required this.isCompleted,
   });
 
   @override
@@ -32,9 +36,7 @@ class TaskItem extends StatelessWidget {
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
-          SizedBox(
-            width: 3,
-          ),
+          SizedBox(width: 3),
           SlidableAction(
             flex: 1,
             onPressed: (_) => onComplete(),
@@ -43,9 +45,7 @@ class TaskItem extends StatelessWidget {
             icon: Icons.check_circle_outline,
             borderRadius: BorderRadius.horizontal(left: Radius.circular(9)),
           ),
-          SizedBox(
-            width: 3,
-          ),
+          SizedBox(width: 3),
           SlidableAction(
             flex: 1,
             onPressed: (_) => onDelete(),
@@ -57,30 +57,27 @@ class TaskItem extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: (){
-          print('faf');
+        onTap: () {
+          Navigator.push(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => isCompleted 
+                ? const TaskSummaryScreen() 
+                : const WatchTaskScreen()
+            )
+          );
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(bottom: 10, left: 16, right: 16),
           decoration: BoxDecoration(
             color: colorWhite,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: colorShadow,
-                offset: Offset(0, 4),
-                blurRadius: 4,
-              ),
-            ],
+            boxShadow: [BoxShadow(color: colorShadow, offset: Offset(0, 4), blurRadius: 4)],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _circleTimeAndTitle(),
-              SizedBox(height: 8),
-              _shortTaskInformation()
-            ],
+            children: [_circleTimeAndTitle(), SizedBox(height: 8), _shortTaskInformation()],
           ),
         ),
       ),
@@ -92,10 +89,7 @@ class TaskItem extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(right: 12),
-          decoration: BoxDecoration(
-            color: colorTaskBlue.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: colorTaskBlue.withOpacity(0.1), shape: BoxShape.circle),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -113,14 +107,14 @@ class TaskItem extends StatelessWidget {
                 width: 40,
                 height: 40,
                 child: Center(
-                  child: Text(
-                    duration,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: colorTaskBlue,
-                      fontSize: 8,
-                    ),
-                  ),
+                  child:
+                      isCompleted
+                          ? Icon(Icons.check, color: colorTaskBlue, size: 20)
+                          : Text(
+                            duration,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: colorTaskBlue, fontSize: 8),
+                          ),
                 ),
               ),
             ],
@@ -132,22 +126,10 @@ class TaskItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Inter',
-                  color: colorBlack,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'Inter', color: colorBlack),
               ),
               const SizedBox(height: 4),
-              Text(
-                description,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: colorGrey,
-                  fontFamily: 'Inter',
-                ),
-              ),
+              Text(description, style: TextStyle(fontSize: 12, color: colorGrey, fontFamily: 'Inter')),
             ],
           ),
         ),
@@ -157,6 +139,7 @@ class TaskItem extends StatelessWidget {
 
   Widget _shortTaskInformation() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
@@ -164,49 +147,30 @@ class TaskItem extends StatelessWidget {
             SizedBox(width: 4),
             Text(
               DateFormat('dd/MM/yyyy').format(date),
-              style: TextStyle(
-                fontSize: 10,
-                fontFamily: 'Inter',
-                color: colorBlack,
-              ),
+              style: TextStyle(fontSize: 10, fontFamily: 'Inter', color: colorBlack),
             ),
           ],
         ),
-        SizedBox(width: 23),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-          decoration: BoxDecoration(
-            color: colorTaskBlue,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            tag,
-            style: TextStyle(
-              color: colorWhite,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Inter',
+        tagGoal == null
+            ? Container()
+            : Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+              decoration: BoxDecoration(color: colorTaskBlue, borderRadius: BorderRadius.circular(10)),
+              child: Text(
+                tagGoal!,
+                style: TextStyle(color: colorWhite, fontSize: 10, fontWeight: FontWeight.w600, fontFamily: 'Inter'),
+              ),
             ),
-          ),
-        ),
-        SizedBox(width: 23),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          decoration: BoxDecoration(
-            border: Border.all(color: colorRed),
-            borderRadius: BorderRadius.circular(20),
-          ),
+          decoration: BoxDecoration(border: Border.all(color: colorRed), borderRadius: BorderRadius.circular(20)),
           child: Row(
             children: [
               Icon(Icons.access_time, size: 16, color: colorRed),
               SizedBox(width: 5),
               Text(
                 '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')} ${time.period == DayPeriod.am ? 'AM' : 'PM'}',
-                style: TextStyle(
-                  color: colorRed,
-                  fontSize: 10,
-                  fontFamily: 'Inter',
-                ),
+                style: TextStyle(color: colorRed, fontSize: 10, fontFamily: 'Inter'),
               ),
             ],
           ),
@@ -215,4 +179,3 @@ class TaskItem extends StatelessWidget {
     );
   }
 }
-

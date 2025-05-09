@@ -12,13 +12,17 @@ class CalendarInitial extends CalendarState{
   @override
   List<Object?> get props => [];
 }
-
-class CalendarTypeWeek extends CalendarState{
+class CalendarProgressLoading extends CalendarState{
   @override
   List<Object?> get props => [];
 }
-
-class CalendarTypeMonth extends CalendarState{
+class CalendarLoaded extends CalendarState{
+  // final List<DateTime> listDate;
+  // final DateTime dateTime;
+  // final String typeCalendar;
+  // const CalendarLoaded({required this.listDate, required this.dateTime, required this.typeCalendar});
+  // @override
+  // List<Object?> get props => [listDate, dateTime, typeCalendar];
   @override
   List<Object?> get props => [];
 }

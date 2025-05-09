@@ -8,3 +8,4 @@ const int HOME_PAGE_INDEX = 0;
 const int CALENDAR_PAGE_INDEX = 1;
 const int SEARCH_PAGE_INDEX = 2;
 const int PROFILE_PAGE_INDEX = 3;
+const int ANALYST_PAGE_INDEX = 4;

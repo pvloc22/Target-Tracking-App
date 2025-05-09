@@ -22,6 +22,7 @@ class _AppbarNewItemState extends State<AppbarNewItem> {
         widget.title,
         style: TextStyle(fontWeight: FontWeight.w600, color: colorWhite),
       ),
+      centerTitle: true,
       backgroundColor: colorPrinciple,
       leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: colorWhite), onPressed: () => Navigator.pop(context)),
     );

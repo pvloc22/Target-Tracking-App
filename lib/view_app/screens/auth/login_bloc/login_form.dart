@@ -3,7 +3,7 @@ import 'package:app/view_app/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/style/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:app/view_app/screens/main/main_bloc/main_form.dart';
 import 'login_bloc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
@@ -47,8 +47,7 @@ class _LoginScreeForm extends State<LoginForm> {
           listener: (context, state) {
             if (state is LoginSuccess) {
               Navigator.pop(context);
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-              print('Login Success');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MainForm()));
             }
             else if (state is LoginFailure) {
               Navigator.pop(context);
@@ -71,7 +70,7 @@ class _LoginScreeForm extends State<LoginForm> {
             } 
             else if (state is LoginGoogleSuccess) {
               Navigator.pop(context);
-              print('Google Login Success');
+              
             }
             else if (state is LoginLoading) {
               showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator()));
@@ -246,7 +245,7 @@ class _LoginScreeForm extends State<LoginForm> {
         alignment: Alignment.centerRight,
         child: TextButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
           },
           child: Text(
             'Forgot password?',

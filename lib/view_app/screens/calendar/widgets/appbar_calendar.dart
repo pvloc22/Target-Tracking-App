@@ -1,11 +1,14 @@
 import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_bloc.dart';
 import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_event.dart';
 import 'package:app/view_app/screens/calendar/calendar_bloc/calendar_state.dart';
+import 'package:app/view_app/screens/calendar/calendar_change_type_bloc/calendar_change_type_bloc.dart';
+import 'package:app/view_app/screens/calendar/calendar_change_type_bloc/calendar_change_type_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/style/colors.dart';
 import '../../../../data/constants/constants.dart';
+import '../calendar_change_type_bloc/calendar_change_type_event.dart';
 
 class AppbarCalendar extends StatefulWidget implements PreferredSizeWidget{
   const AppbarCalendar({super.key});
@@ -24,11 +27,13 @@ class _AppbarCalendarState extends State<AppbarCalendar> {
   void dropDownCallBack(String? selectedValue) {
     if (selectedValue is String &&  selectedValue == WEEK_CALENDAR) {
       _selectedValue = WEEK_CALENDAR;
-      context.read<CalendarBloc>().add(CalendarChangeType(typeCalendar: WEEK_CALENDAR));
+      print(_selectedValue);
+      context.read<CalendarChangeTypeBloc>().add(CalendarChangeType(typeCalendar: WEEK_CALENDAR));
     }
     else {
       _selectedValue = MONTH_CALENDAR;
-      context.read<CalendarBloc>().add(CalendarChangeType(typeCalendar: MONTH_CALENDAR));
+      print(_selectedValue);
+      context.read<CalendarChangeTypeBloc>().add(CalendarChangeType(typeCalendar: MONTH_CALENDAR));
     }
   }
   @override
@@ -38,7 +43,7 @@ class _AppbarCalendarState extends State<AppbarCalendar> {
       title: Text('Calendar', style: TextStyle(fontWeight: FontWeight.bold, color: colorWhite)),
       backgroundColor: colorPrinciple,
       actions: [
-        BlocBuilder<CalendarBloc, CalendarState>(builder:(context, state){
+        BlocBuilder<CalendarChangeTypeBloc, CalendarChangeTypeState>(builder:(context, state){
           return _dropdownButton();
         })
       ],

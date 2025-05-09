@@ -1,9 +1,8 @@
-import 'package:app/data/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/style/colors.dart';
 import 'package:app/view_app/widgets/GoalItem.dart';
 import 'package:app/view_app/widgets/TaskItem.dart';
-import 'package:app/view_app/widgets/bottom_navigator_bar.dart';
+
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -63,29 +62,25 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
             Container(
               height: 44,
               margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: colorWhite,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: colorBorderGrey),
-              ),
+              // decoration: BoxDecoration(
+              //   color: colorWhite,
+              //   borderRadius: BorderRadius.circular(12),
+              //   border: Border.all(color: colorBorderGrey),
+              // ),
               child: TabBar(
                 controller: _tabController,
-                labelColor: colorWhite,
-                unselectedLabelColor: colorTextGrey,
-                indicator: BoxDecoration(
-                  color: colorPrinciple,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                dividerColor: Colors.transparent,
+                labelColor: colorBlack,
+                unselectedLabelColor: colorGrey,
+                dividerColor: colorLightGrey,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Inter',
                 ),
                 unselectedLabelStyle: const TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontFamily: 'Inter',
                 ),
                 padding: const EdgeInsets.all(4),
@@ -110,45 +105,43 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: SEARCH_PAGE_INDEX,
-      ),
     );
   }
 
   Widget _buildAllResultsList() {
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Tasks',
-              style: TextStyle(
-                color: colorBlack,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Inter',
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                _tabController.animateTo(1); // Switch to Tasks tab
-              },
-              child: Text(
-                'See all',
+        Container(
+          margin: EdgeInsets.only(bottom: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Tasks',
                 style: TextStyle(
-                  color: colorPrinciple,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                  color: colorBlack,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                   fontFamily: 'Inter',
                 ),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  _tabController.animateTo(1); // Switch to Tasks tab
+                },
+                child: Text(
+                  'See all',
+                  style: TextStyle(
+                    color: colorPrinciple,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Inter',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 12),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -161,42 +154,44 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
               duration: '2h',
               date: DateTime.now(),
               time: TimeOfDay.now(),
-              tag: 'Design',
+              tagGoal: 'Design',
+              isCompleted: false,
               onComplete: () {},
               onDelete: () {},
             );
           },
         ),
-        const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Goals',
-              style: TextStyle(
-                color: colorBlack,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Inter',
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                _tabController.animateTo(2); // Switch to Goals tab
-              },
-              child: Text(
-                'See all',
+        Container(
+          margin: EdgeInsets.only(top: 24, bottom: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Goals',
                 style: TextStyle(
-                  color: colorPrinciple,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                  color: colorBlack,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                   fontFamily: 'Inter',
                 ),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  _tabController.animateTo(2); // Switch to Goals tab
+                },
+                child: Text(
+                  'See all',
+                  style: TextStyle(
+                    color: colorPrinciple,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Inter',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 12),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -206,8 +201,9 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
             return GoalItem(
               title: 'Complete App Development',
               description: 'Finish all features and prepare for testing phase',
-              iconBackgroundColor: colorLightGreen,
-              icon: Icons.rocket_launch,
+              iconColor: colorLightGreen,
+              iconData: Icons.rocket_launch,
+              progress: 0.75,
               onComplete: () {
                 // Handle goal completion
               },
@@ -223,7 +219,6 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
 
   Widget _buildTaskList() {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: 5,
       separatorBuilder: (context, index) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
@@ -233,7 +228,8 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
           duration: '2h',
           date: DateTime.now(),
           time: TimeOfDay.now(),
-          tag: 'Design',
+          tagGoal: 'Design',
+          isCompleted: false,
           onComplete: () {},
           onDelete: () {},
         );
@@ -243,15 +239,15 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
 
   Widget _buildGoalList() {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: 5,
       separatorBuilder: (context, index) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         return GoalItem(
           title: 'Complete App Development',
           description: 'Finish all features and prepare for testing phase',
-          iconBackgroundColor: colorLightGreen,
-          icon: Icons.rocket_launch,
+          iconColor: colorLightGreen,
+          iconData: Icons.rocket_launch,
+          progress: 0.6,
           onComplete: () {
             // Handle goal completion
           },

@@ -5,9 +5,7 @@ abstract class CalendarEvent{
   const CalendarEvent();
 }
 
-class CalendarChangeType extends CalendarEvent{
-   final String typeCalendar;
-
-  const CalendarChangeType({required this.typeCalendar});
-
+class CalendarFetch extends CalendarEvent{
+  final DateTime dateTime;
+  const CalendarFetch({required this.dateTime});
 }
